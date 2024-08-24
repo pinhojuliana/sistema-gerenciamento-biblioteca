@@ -1,5 +1,6 @@
 package com.sistema.biblioteca.cliente;
 
+import com.sistema.biblioteca.biblioteca.FormatadorData;
 import com.sistema.biblioteca.livro.Livro;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,11 +41,15 @@ public class Cliente {
     }
 
     public String mostrarEmprestimosCliente(){
-        StringBuilder resultado = new StringBuilder();
-        for (Map.Entry<Livro, LocalDate> entry : livrosEmprestados.entrySet()) {
-            resultado.append(entry.getKey().getTitulo()).append(" - ").append(entry.getValue()).append("\n");
+        if(livrosEmprestados.isEmpty()){
+            return "Nenhuma atividade registrada";
+        } else {
+            StringBuilder resultado = new StringBuilder();
+            for (Map.Entry<Livro, LocalDate> entry : livrosEmprestados.entrySet()) {
+                resultado.append(entry.getKey().getTitulo()).append(" - ").append(entry.getValue()).append("\n");
+            }
+            return resultado.toString();
         }
-        return resultado.toString();
     }
 
 

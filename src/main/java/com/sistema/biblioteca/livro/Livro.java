@@ -51,12 +51,17 @@ public class Livro {
         return String.format("Livro: %s \nAutor: %s \nGenero Literário: %s \nData cadastro: %s ", titulo, autor.getNome(), generoLiterario.getNomeGeneroLiterario(), new FormatadorData(dataCadastro).formatarData());
     }
 
-    public String mostrarEmprestimosLivro(){
-        StringBuilder resultado = new StringBuilder();
-        for (Map.Entry<Cliente, LocalDate> entry : emprestimosLivro.entrySet()) {
-            resultado.append(entry.getKey().getNomeUsuario()).append(" - ").append(entry.getValue()).append("\n");
+    public String mostrarEmprestimosLivro() {
+        if(emprestimosLivro.isEmpty()){
+            return "Nenhuma atividade registrada";
         }
-        return resultado.toString();
+        else{
+            StringBuilder resultado = new StringBuilder();
+            for (Map.Entry<Cliente, LocalDate> entry : emprestimosLivro.entrySet()) {
+                resultado.append(entry.getKey().getNomeUsuario()).append(" - ").append(entry.getValue()).append("\n");
+            }
+            return resultado.toString();
+        }
     }
 
 }
