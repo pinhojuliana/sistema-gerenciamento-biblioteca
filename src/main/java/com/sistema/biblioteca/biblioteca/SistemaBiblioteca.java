@@ -41,6 +41,7 @@ public class SistemaBiblioteca {
 
             scanner.nextLine();
 
+            //testar
             if(opcao == 1) {
                 System.out.println("Livros disponíveis:");
                 biblioteca.mostrarLivrosDisponiveis();
