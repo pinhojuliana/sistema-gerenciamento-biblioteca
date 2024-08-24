@@ -1,7 +1,7 @@
 package com.sistema.biblioteca.cliente;
 
-public class UsuarioInexistensException extends RuntimeException{
-    public UsuarioInexistensException (){
+public class UsuarioInexistenteException extends RuntimeException{
+    public UsuarioInexistenteException(){
         super ("Esse usuário não existe");
     }
 }

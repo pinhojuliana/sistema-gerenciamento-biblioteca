@@ -2,7 +2,7 @@ package com.sistema.biblioteca.biblioteca;
 
 import com.sistema.biblioteca.autor.Autor;
 import com.sistema.biblioteca.cliente.Cliente;
-import com.sistema.biblioteca.cliente.UsuarioInexistensException;
+import com.sistema.biblioteca.cliente.UsuarioInexistenteException;
 import com.sistema.biblioteca.livro.LivroIndisponivelException;
 import com.sistema.biblioteca.livro.GeneroLiterario;
 import com.sistema.biblioteca.livro.Livro;
@@ -14,6 +14,16 @@ import java.util.Scanner;
 public class SistemaBiblioteca {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
+        Biblioteca biblioteca = new Biblioteca();
+
+        biblioteca.cadastrarLivro("1984", new Autor("George Orwell"), GeneroLiterario.FICCAO_CIENTIFICA);
+        biblioteca.cadastrarLivro("Assassinado no Expresso do Oriente", new Autor("Agatha Cristhie"), GeneroLiterario.ROMANCE_POLICIAL);
+        biblioteca.cadastrarLivro("O Pequeno Principe", new Autor("Antoine de Saint-Exupéry"), GeneroLiterario.FANTASIA);
+        biblioteca.cadastrarLivro("Verdadeiro Evangelho", new Autor("Paul Washer"), GeneroLiterario.RELIGIOSO);
+        biblioteca.cadastrarLivro("Trabalho Focado", new Autor("Carl Newport"), GeneroLiterario.DESENVOLVIMENTO_PESSOAL);
+        biblioteca.cadastrarLivro("Iracema", new Autor("José de Alencar"), GeneroLiterario.ROMANCE);
+
         while(true){
             System.out.println("--- Bem-vindo ao sistema de Biblioteca ---");
             System.out.println("Escolha uma opção para continuar:");
@@ -29,43 +39,32 @@ public class SistemaBiblioteca {
             if(opcao == 7)
                 break;
 
-            Biblioteca biblioteca = new Biblioteca();
-
-            biblioteca.cadastrarLivro("1984", new Autor("George Orwell"), GeneroLiterario.FICCAO_CIENTIFICA);
-            biblioteca.cadastrarLivro("Assassinado no Expresso do Oriente", new Autor("Agatha Cristhie"), GeneroLiterario.ROMANCE_POLICIAL);
-            biblioteca.cadastrarLivro("O Pequeno Principe", new Autor("Antoine de Saint-Exupéry"), GeneroLiterario.FANTASIA);
-            biblioteca.cadastrarLivro("Verdadeiro Evangelho", new Autor("Paul Washer"), GeneroLiterario.RELIGIOSO);
-            biblioteca.cadastrarLivro("Trabalho Focado", new Autor("Carl Newport"), GeneroLiterario.DESENVOLVIMENTO_PESSOAL);
-            biblioteca.cadastrarLivro("Iracema", new Autor("José de Alencar"), GeneroLiterario.ROMANCE);
-
             scanner.nextLine();
 
-            //testar funcionamento e consertar porque mudei o verificarCliente
             if(opcao == 1) {
                 System.out.println("Livros disponíveis:");
                 biblioteca.mostrarLivrosDisponiveis();
 
                 System.out.println("Qual livro deseja pegar emprestado?");
-                String livroEmprestimo = scanner.nextLine();
+                String tituloLivroEmprestimo = scanner.nextLine();
 
-                System.out.println("Qual é o seu nome de usuário?");
-                String usuarioCliente = scanner.nextLine();
-                if (biblioteca.verificarCliente(usuarioCliente) == true) {
-                    for (Livro livro : biblioteca.getLivros()) {
-                        if (livroEmprestimo.equalsIgnoreCase(livro.getTitulo())) {
-                            try {
-                                biblioteca.emprestarLivro(new Cliente(usuarioCliente));
-                                System.out.println("Livro: " + livro.getTitulo() + ", id: " + livro.getId() + " foi emprestado para o cliente: " + usuarioCliente);
-                            } catch (LivroIndisponivelException e) {
-                                System.out.println(e.getMessage());
-                            }
-                        }
-                    }
-                } else {
-                    System.out.println("Usuário inexistente. Não é possivel pegar livros emprestados sem um cadastro.");
+                try {
+                    System.out.println("Qual é o seu nome de usuário?");
+                    String usuarioCliente = scanner.nextLine();
+                    Cliente cliente = biblioteca.verificarCliente(usuarioCliente);
+                                try {
+                                    Livro livro = biblioteca.pesquisarLivroTitulo(tituloLivroEmprestimo);
+                                    biblioteca.emprestarLivro(cliente, livro);
+                                    System.out.println("Livro: " + livro.getTitulo() + ", id: " + livro.getId() + " foi emprestado para o cliente: " + usuarioCliente);
+                                } catch (LivroIndisponivelException n) {
+                                    System.out.println(n.getMessage());
+                                }
+
+                }catch (UsuarioInexistenteException e){
+                    System.out.println(e.getMessage());
                 }
             }
-            // a verificação de nome de usuario não está funcionando e consertar verificarCliente
+            //testar
             if(opcao == 2){
                 System.out.println("Para cadastrar um novo usuário, nosso sitema precisa de algumas informacoes...");
 
@@ -84,16 +83,17 @@ public class SistemaBiblioteca {
                 while (true){
                     System.out.println("Escolha um nome de usuário:");
                     nomeUsuario = scanner.nextLine();
-                    if (biblioteca.verificarCliente(nomeUsuario)){
-                        System.out.println("Nome indisponível. Escolha outro nome de usuario.");
-                    } else {
+                    try {
+                        biblioteca.verificarCliente(nomeUsuario);
+                        System.out.println("Nome indisponível. Escolha outro nome de usuário.");
+                    } catch (UsuarioInexistenteException e) {
                         break;
                     }
                 }
                 biblioteca.cadastrarCliente(nome, nomeUsuario, dataFormatada, email);
                 System.out.println("Cliente cadastrado com sucesso! Guarde seu nome de usuário para futuras consultas e empréstimos de livros.");
             }
-            // testar
+            //testar
             if(opcao == 3){
                 System.out.println("Qual o título do Livro?");
                 String titulo = scanner.nextLine();
@@ -112,30 +112,42 @@ public class SistemaBiblioteca {
                     }
                 }
                 for(Livro livros : biblioteca.getLivros()){
-                    if(titulo.equalsIgnoreCase(livros.getTitulo()) || nomeAutor.equalsIgnoreCase(livros.getAutor().getNome())){
-                        System.out.println("Livro já cadastrado. Não é possível adicionar esse livro");
-                    } else {
-                        for(Autor autor : biblioteca.getAutores()){
-                            if(nomeAutor.equalsIgnoreCase(autor.getNome())){
-                                biblioteca.cadastrarLivro(titulo, autor, generoSelecionado);
-                            } else {
+                    try{
+                        biblioteca.verificarCadastroLivro(titulo, nomeAutor);
+                        Autor autor = biblioteca.verificarAutor(nomeAutor);
+                            if(biblioteca.verificarAutor(nomeAutor) == null){
                                 biblioteca.cadastrarLivro(titulo, new Autor(nomeAutor), generoSelecionado);
+                            } else {
+                                biblioteca.cadastrarLivro(titulo, autor, generoSelecionado);
                             }
-                        }
                         System.out.println("Livro cadastrado com sucesso.");
-
+                    }
+                    catch (RuntimeException e) {
+                        System.out.println(e.getMessage());
                     }
                 }
 
             }
             //testar
             if(opcao == 4){
-                try {
-                    System.out.println("Para pesquisar um livro, por favo insira seu título: ");
-                    String titulo = scanner.nextLine();
-                    System.out.println(biblioteca.pesquisarLivro(titulo));
-                } catch (LivroIndisponivelException e){
-                    System.out.println(e.getMessage());
+                System.out.println("Para pesquisar insira uma opção: ");
+                System.out.println("1- Pesquisar por título");
+                System.out.println("2- Pesquisar por gênero literário");
+                int input = scanner.nextInt();
+                //scanner.nextLine();
+                if (input == 1) {
+                    try {
+                        System.out.println("Por favo insira o título do livro: ");
+                        String titulo = scanner.nextLine();
+                        System.out.println(biblioteca.pesquisarLivroTitulo(titulo));
+                    } catch (LivroIndisponivelException e) {
+                        System.out.println(e.getMessage());
+                    }
+                } else if (input == 2){
+                    System.out.println("Gẽneros literários disponíveis:\n " + GeneroLiterario.mostrarOpcoesGeneroLiterario());
+                    System.out.println("Livros de qual gênero literário deseja pesquisar?");
+                    String generoLiterario = scanner.nextLine();
+                    System.out.println(biblioteca.pesquisarLivroGenero(GeneroLiterario.verificarExistenciaGenero(generoLiterario)));
                 }
             }
             //testar
@@ -145,7 +157,7 @@ public class SistemaBiblioteca {
                 try {
                     System.out.println(biblioteca.verificarCliente(nomeUsuario).mostrarEmprestimosCliente());
                 }
-                catch (UsuarioInexistensException e){
+                catch (UsuarioInexistenteException e){
                     System.out.println(e.getMessage());
                 }
             }
@@ -154,10 +166,13 @@ public class SistemaBiblioteca {
                 try{
                     System.out.println("Para pesquisar os empŕestimos de um livro insira seu título: ");
                     String tituloLivro = scanner.nextLine();
-                    System.out.println(biblioteca.pesquisarLivro(tituloLivro).mostrarEmprestimosLivro());
+                    System.out.println(biblioteca.pesquisarLivroTitulo(tituloLivro).mostrarEmprestimosLivro());
                 } catch (LivroIndisponivelException e) {
                     System.out.println(e.getMessage());
                 }
+            }
+            else{
+                System.out.println("Opção inválida. Por favor insira uma opção válida");
             }
 
         }

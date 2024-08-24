@@ -1,7 +1,7 @@
 package com.sistema.biblioteca.biblioteca;
 
 import com.sistema.biblioteca.cliente.Cliente;
-import com.sistema.biblioteca.cliente.UsuarioInexistensException;
+import com.sistema.biblioteca.cliente.UsuarioInexistenteException;
 import com.sistema.biblioteca.emprestimo.Emprestimo;
 import com.sistema.biblioteca.autor.Autor;
 import com.sistema.biblioteca.livro.LivroIndisponivelException;
@@ -44,8 +44,7 @@ public class Biblioteca {
         }
     }
 
-    public void emprestarLivro(Cliente cliente) throws LivroIndisponivelException {
-        for(Livro livro : livros) {
+    public void emprestarLivro(Cliente cliente, Livro livro) throws LivroIndisponivelException {
             if (livro.isDisponivel()) {
                 livro.setDisponivel(false);
                 livro.setDataAtualizacao(LocalDate.now());
@@ -59,7 +58,37 @@ public class Biblioteca {
             } else {
                 throw new LivroIndisponivelException();
             }
+    }
+
+    public void verificarCadastroLivro(String titulo, String nomeAutor) {
+        for (Livro livro : livros) {
+            if (titulo.equalsIgnoreCase(livro.getTitulo()) || nomeAutor.equalsIgnoreCase(livro.getAutor().getNome())) {
+                throw new RuntimeException("Não é possível cadastrar este livro.Livro já cadastrado.");
+            }
         }
+    }
+
+    public Livro pesquisarLivroTitulo(String tituloLivro) throws LivroIndisponivelException{
+        for (Livro livro : livros){
+            if(tituloLivro.equalsIgnoreCase(livro.getTitulo())){
+                return livro;
+            }
+        }
+        throw new LivroIndisponivelException();
+    }
+
+    public String pesquisarLivroGenero(GeneroLiterario generoLiterario){
+        List<Livro> livrosGeneroPesquisado = new ArrayList<>();
+        StringBuilder livrosGeneroString = new StringBuilder();
+        for(Livro livro : livros){
+            if(livro.getGeneroLiterario() == generoLiterario){
+                livrosGeneroPesquisado.add(livro);
+            }
+        }
+        for (Livro livro :livrosGeneroPesquisado){
+            livrosGeneroString.append(livro.getTitulo()).append("\n");
+        }
+        return livrosGeneroString.toString();
     }
 
     public Cliente cadastrarCliente(String nome, String nomeUsuario, LocalDate dataNascimento, String email){
@@ -76,22 +105,23 @@ public class Biblioteca {
         return clientesCadastrados.toString();
     }
 
-    public Cliente verificarCliente(String nomeUsuario) throws UsuarioInexistensException {
+    public Cliente verificarCliente(String nomeUsuario) throws UsuarioInexistenteException {
         for (Cliente cliente : clientes) {
             if (nomeUsuario.equalsIgnoreCase(cliente.getNomeUsuario())) {
                 return cliente;
             }
         }
-        throw new UsuarioInexistensException();
+        throw new UsuarioInexistenteException();
     }
 
-    public Livro pesquisarLivro(String tituloLivro) throws LivroIndisponivelException{
-        for (Livro livro : livros){
-            if(tituloLivro.equalsIgnoreCase(livro.getTitulo())){
-                return livro;
+    public Autor verificarAutor(String nomeAutor){
+        for(Autor autor : autores){
+            if(nomeAutor.equalsIgnoreCase(autor.getNome())){
+                return autor;
             }
         }
-       throw new LivroIndisponivelException();
+        return null;
     }
+
 
 }
