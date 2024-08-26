@@ -7,6 +7,7 @@ import com.sistema.biblioteca.livro.LivroIndisponivelException;
 import com.sistema.biblioteca.livro.GeneroLiterario;
 import com.sistema.biblioteca.livro.Livro;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -71,10 +72,18 @@ public class SistemaBiblioteca {
                 System.out.println("Insira seu nome completo:");
                 String nome = scanner.nextLine();
 
-                System.out.println("Insira sua data de nascimeno (dd/MM/yyyy):");
-                String dataNascimento = scanner.nextLine();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                LocalDate dataFormatada = LocalDate.parse(dataNascimento, formatter);
+                LocalDate dataFormatada;
+                while (true) {
+                    try {
+                        System.out.println("Insira sua data de nascimeno (dd/MM/yyyy):");
+                        String dataNascimento = scanner.nextLine();
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                        dataFormatada = LocalDate.parse(dataNascimento, formatter);
+                        break;
+                    } catch (DateTimeException e) {
+                        System.out.println("Data inválida");
+                    }
+                }
 
                 System.out.println("Insira um e-mail valido:");
                 String email = scanner.nextLine();
