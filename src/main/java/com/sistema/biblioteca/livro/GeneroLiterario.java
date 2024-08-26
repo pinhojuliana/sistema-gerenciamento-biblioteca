@@ -39,23 +39,7 @@ public enum GeneroLiterario {
     }
 
     public static String mostrarOpcoesGeneroLiterario(){
-        return "Romance\n" +
-                "Romance policial\n" +
-                "Ficção científica\n" +
-                "Religioso\n" +
-                "Infantil\n" +
-                "Ciência\n" +
-                "Didático\n" +
-                "Fantasia\n" +
-                "Quadrinhos\n" +
-                "Terror\n" +
-                "Poesia\n" +
-                "Política\n" +
-                "Suspense\n" +
-                "Drama\n" +
-                "Desenvolvimento pessoal\n" +
-                "Culinária\n" +
-                "Arte";
+        return "-Romance\n-Romance policial\n-Ficção científica\n-Religioso\n-Infantil\n-Ciência\n-Didático\n-Fantasia\n-Quadrinhos\n-Terror\n-Poesia\n-Política\n-Suspense\n-Drama\n-Desenvolvimento pessoal\n-Culinária\n-Arte";
     }
 
 }
