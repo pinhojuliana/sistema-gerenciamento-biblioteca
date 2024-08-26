@@ -4,7 +4,6 @@ import com.sistema.biblioteca.biblioteca.FormatadorData;
 import com.sistema.biblioteca.livro.Livro;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-//import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -13,7 +12,6 @@ import java.util.*;
 @Getter
 @Setter
 @AllArgsConstructor
-//@NoArgsConstructor
 public class Cliente {
     private UUID id;
     private String nome;
