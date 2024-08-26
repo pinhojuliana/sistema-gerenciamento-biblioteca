@@ -48,7 +48,7 @@ O sistema permite realizar operações básicas de gerenciamento de uma bibliote
 
 ## ▶️ Como Usar
 
-O programa é executado a partir da classe `Main`, onde o usuário pode interagir com o sistema através de um menu de opções.
+O programa é executado a partir da classe `SistemaBiblioteca`, onde o usuário pode interagir com o sistema através de um menu de opções.
 
 ## 🔗 Link do Desafio
 
