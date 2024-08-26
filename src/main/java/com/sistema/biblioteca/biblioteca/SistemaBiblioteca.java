@@ -27,14 +27,7 @@ public class SistemaBiblioteca {
 
         System.out.println("--- Bem-vindo ao sistema de Biblioteca ---");
         while(true){
-            System.out.println("Escolha uma opção para continuar:");
-            System.out.println("1- Ver os livros disponíveis para empréstimo");
-            System.out.println("2- Cadastrar usuário");
-            System.out.println("3- Cadastrar novo livro");
-            System.out.println("4- Pesquisar livro");
-            System.out.println("5- Verificar empréstimos de um usuário");
-            System.out.println("6- Verificar empréstimos de um livro");
-            System.out.println("7- Sair ");
+            System.out.println(biblioteca.exibirMenu());
 
             int opcao = scanner.nextInt();
             if(opcao == 7)
