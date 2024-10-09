@@ -1,6 +1,6 @@
 package com.sistema.biblioteca.autor;
 
-import com.sistema.biblioteca.Pessoa;
+import com.sistema.biblioteca.classes_pai.Pessoa;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,4 +1,4 @@
-package com.sistema.biblioteca;
+package com.sistema.biblioteca.classes_pai;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

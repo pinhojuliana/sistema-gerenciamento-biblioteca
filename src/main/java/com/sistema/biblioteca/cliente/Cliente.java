@@ -1,6 +1,6 @@
 package com.sistema.biblioteca.cliente;
 
-import com.sistema.biblioteca.Pessoa;
+import com.sistema.biblioteca.classes_pai.Pessoa;
 import com.sistema.biblioteca.emprestimo.Emprestimo;
 import lombok.Getter;
 import lombok.Setter;
