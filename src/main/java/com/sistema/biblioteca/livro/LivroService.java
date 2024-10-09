@@ -8,6 +8,7 @@ import lombok.Getter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 public class LivroService {
@@ -23,62 +24,31 @@ public class LivroService {
         livros.add(livro);
     }
 
-    public void mostrarLivrosDisponiveis(){
-        List<Livro> livrosDisponiveis = new ArrayList<>();
-        for(Livro livro : livros){
-            if(livro.isDisponivel()){
-                livrosDisponiveis.add(livro);
-            }
-        }
-        for(Livro livro : livrosDisponiveis){
-            System.out.println(livro.getTitulo());
-        }
+    public String mostrarLivrosDisponiveis(){
+        return livros.stream()
+                .map(Livro::getTitulo)
+                .collect(Collectors.joining("\n"));
     }
 
-    public void emprestarLivro(Cliente cliente, Livro livro) throws LivroIndisponivelException {
-        if (livro.isDisponivel()) {
-            livro.setDisponivel(false);
-            livro.setDataAtualizacao(LocalDate.now());
 
-            Emprestimo emprestimo = new Emprestimo(livro, cliente);
-            emprestimos.add(emprestimo);
-
-            livro.getEmprestimosLivro().put(cliente, LocalDate.now());
-
-            cliente.getLivrosEmprestados().put(livro, LocalDate.now());
-        } else {
-            throw new LivroIndisponivelException();
-        }
-    }
-
-    public void verificarCadastroLivro(String titulo, String nomeAutor) {
-        for (Livro livro : livros) {
-            if (titulo.equalsIgnoreCase(livro.getTitulo()) || nomeAutor.equalsIgnoreCase(livro.getAutor().getNome())) {
-                throw new RuntimeException("Não é possível cadastrar este livro.Livro já cadastrado.");
-            }
-        }
+    public Livro verificarCadastroLivro(String titulo, Autor autor) {
+        return livros.stream()
+                .filter(l -> l.getTitulo().equalsIgnoreCase(titulo) && l.getAutor().equals(autor))
+                .findFirst()
+                .orElse(null);
     }
 
     public Livro pesquisarLivroTitulo(String tituloLivro) throws LivroIndisponivelException{
-        for (Livro livro : livros){
-            if(tituloLivro.equalsIgnoreCase(livro.getTitulo())){
-                return livro;
-            }
-        }
-        throw new LivroIndisponivelException();
+        return livros.stream()
+                .filter(l -> l.getTitulo().equalsIgnoreCase(tituloLivro))
+                .findFirst()
+                .orElseThrow(LivroIndisponivelException::new);
     }
 
     public String pesquisarLivroGenero(GeneroLiterario generoLiterario){
-        List<Livro> livrosGeneroPesquisado = new ArrayList<>();
-        StringBuilder livrosGeneroString = new StringBuilder();
-        for(Livro livro : livros){
-            if(livro.getGeneroLiterario() == generoLiterario){
-                livrosGeneroPesquisado.add(livro);
-            }
-        }
-        for (Livro livro :livrosGeneroPesquisado){
-            livrosGeneroString.append(livro.getTitulo()).append("\n");
-        }
-        return livrosGeneroString.toString();
+       return  livros.stream()
+                .filter(l -> l.getGeneroLiterario().equals(generoLiterario))
+               .map(Livro::getTitulo)
+                .collect(Collectors.joining("\n"));
     }
 }

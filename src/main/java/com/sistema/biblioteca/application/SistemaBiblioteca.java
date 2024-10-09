@@ -1,6 +1,7 @@
-package com.sistema.biblioteca.biblioteca;
+package com.sistema.biblioteca.application;
 
 import com.sistema.biblioteca.autor.Autor;
+import com.sistema.biblioteca.biblioteca.Biblioteca;
 import com.sistema.biblioteca.cliente.Cliente;
 import com.sistema.biblioteca.cliente.UsuarioInexistenteException;
 import com.sistema.biblioteca.livro.LivroIndisponivelException;

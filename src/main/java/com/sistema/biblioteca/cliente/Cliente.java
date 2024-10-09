@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -19,25 +18,13 @@ public class Cliente extends Pessoa {
     public Cliente(String nome, String nomeUsuario, LocalDate dataNascimento, String email) {
         super(nome, dataNascimento);
         this.nomeUsuario = nomeUsuario;
+        //criar validação de email
         this.email = email;
         this.emprestimos = new ArrayList<>();
     }
 
     public String toString(){
         return String.format("Cliente: %s \nNome: %s \nId: %s", nomeUsuario, super.getNome(), super.getId().toString());
-
     }
-
-    public String mostrarEmprestimosCliente(){
-        if(emprestimos.isEmpty()){
-            return "Nenhuma atividade registrada";
-        } else {
-            return emprestimos.stream()
-                    .sorted(Comparator.comparing(Emprestimo::getDataEmprestimo))
-                    .map(e -> "Livro: " + e.getLivro().getTitulo() + ", Data: " + e.getDataEmprestimo())
-                    .collect(Collectors.joining("\n"));
-        }
-    }
-
 
 }

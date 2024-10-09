@@ -2,17 +2,13 @@ package com.sistema.biblioteca.livro;
 
 import com.sistema.biblioteca.autor.Autor;
 import com.sistema.biblioteca.emprestimo.Emprestimo;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Livro {
@@ -39,15 +35,6 @@ public class Livro {
         return String.format("Livro: %s \nAutor: %s \nGenero Literário: %s \nData cadastro: %s ", titulo, autor.getNome(), generoLiterario.getNomeGeneroLiterario(), new FormatadorData(dataCadastro).formatarData());
     }
 
-    public String mostrarEmprestimosLivro() {
-        if(emprestimosLivro.isEmpty()){
-            return "Nenhuma atividade registrada";
-        }
-        return emprestimosLivro.stream()
-                .sorted(Comparator.comparing(Emprestimo::getDataEmprestimo))
-                .map(e -> "Cliente: " + e.getCliente().getNome() + ", Data: " + e.getDataEmprestimo())
-                .collect(Collectors.joining("\n"));
-    }
 
 }
 

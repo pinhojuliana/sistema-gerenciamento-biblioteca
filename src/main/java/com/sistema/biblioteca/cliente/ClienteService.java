@@ -1,39 +1,38 @@
 package com.sistema.biblioteca.cliente;
 
+import com.sistema.biblioteca.emprestimo.Emprestimo;
 import lombok.Getter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 public class ClienteService {
     private List<Cliente> clientes;
 
+
     public ClienteService(){
         this.clientes = new ArrayList<>();
     }
 
-    public Cliente cadastrarCliente(String nome, String nomeUsuario, LocalDate dataNascimento, String email){
+    public void cadastrarCliente(String nome, String nomeUsuario, LocalDate dataNascimento, String email){
         Cliente cliente = new Cliente(nome, nomeUsuario, dataNascimento, email);
         clientes.add(cliente);
-        return cliente;
+        //verificar se o cliente existe com anyMatch do stram API
     }
 
     public String mostrarClientesCadastrados(){
-        StringBuilder clientesCadastrados = new StringBuilder();
-        for (Cliente cliente : clientes) {
-            clientesCadastrados.append(cliente.getNomeUsuario()).append("\n");
-        }
-        return clientesCadastrados.toString();
+        return clientes.stream().map(Cliente::getNomeUsuario)
+                .collect(Collectors.joining("\n"));
     }
 
     public Cliente verificarCliente(String nomeUsuario) throws UsuarioInexistenteException {
-        for (Cliente cliente : clientes) {
-            if (nomeUsuario.equalsIgnoreCase(cliente.getNomeUsuario())) {
-                return cliente;
-            }
-        }
-        throw new UsuarioInexistenteException();
+        return clientes.stream()
+                .filter(c -> c.getNomeUsuario().equalsIgnoreCase(nomeUsuario))
+                .findFirst()
+                .orElseThrow(UsuarioInexistenteException::new);
     }
 }
