@@ -1,18 +1,14 @@
 package com.sistema.biblioteca.emprestimo;
 
-import com.sistema.biblioteca.biblioteca.FormatadorData;
 import com.sistema.biblioteca.cliente.Cliente;
 import com.sistema.biblioteca.livro.Livro;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Emprestimo {

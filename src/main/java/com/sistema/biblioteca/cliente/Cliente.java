@@ -1,52 +1,41 @@
 package com.sistema.biblioteca.cliente;
 
-import com.sistema.biblioteca.biblioteca.FormatadorData;
-import com.sistema.biblioteca.livro.Livro;
-import lombok.AllArgsConstructor;
+import com.sistema.biblioteca.Pessoa;
+import com.sistema.biblioteca.emprestimo.Emprestimo;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
-@AllArgsConstructor
-public class Cliente {
-    private UUID id;
-    private String nome;
+public class Cliente extends Pessoa {
     private String nomeUsuario;
-    private LocalDate dataNascimento;
     private String email;
-    private Map<Livro, LocalDate> livrosEmprestados = new HashMap<>();
-
-    public Cliente(String nomeUsuario) {
-        this.nomeUsuario = nomeUsuario;
-        this.id = UUID.randomUUID();
-    }
+    private List<Emprestimo> emprestimos;
 
     public Cliente(String nome, String nomeUsuario, LocalDate dataNascimento, String email) {
-        this.id = UUID.randomUUID();
-        this.nome = nome;
+        super(nome, dataNascimento);
         this.nomeUsuario = nomeUsuario;
-        this.dataNascimento = dataNascimento;
         this.email = email;
+        this.emprestimos = new ArrayList<>();
     }
 
     public String toString(){
-        return String.format("Cliente: %s \nNome: %s \nId: %s", nomeUsuario, nome, id.toString());
+        return String.format("Cliente: %s \nNome: %s \nId: %s", nomeUsuario, super.getNome(), super.getId().toString());
 
     }
 
     public String mostrarEmprestimosCliente(){
-        if(livrosEmprestados.isEmpty()){
+        if(emprestimos.isEmpty()){
             return "Nenhuma atividade registrada";
         } else {
-            StringBuilder resultado = new StringBuilder();
-            for (Map.Entry<Livro, LocalDate> entry : livrosEmprestados.entrySet()) {
-                resultado.append(entry.getKey().getTitulo()).append(" - ").append(entry.getValue()).append("\n");
-            }
-            return resultado.toString();
+            return emprestimos.stream()
+                    .sorted(Comparator.comparing(Emprestimo::getDataEmprestimo))
+                    .map(e -> "Livro: " + e.getLivro().getTitulo() + ", Data: " + e.getDataEmprestimo())
+                    .collect(Collectors.joining("\n"));
         }
     }
 

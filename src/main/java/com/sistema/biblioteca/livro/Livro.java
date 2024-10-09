@@ -1,8 +1,6 @@
 package com.sistema.biblioteca.livro;
 
 import com.sistema.biblioteca.autor.Autor;
-import com.sistema.biblioteca.biblioteca.FormatadorData;
-import com.sistema.biblioteca.cliente.Cliente;
 import com.sistema.biblioteca.emprestimo.Emprestimo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,10 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -27,16 +23,8 @@ public class Livro {
     private LocalDate dataCadastro;
     private LocalDate dataAtualizacao;
     private GeneroLiterario generoLiterario;
-    private Map<Cliente, LocalDate> emprestimosLivro = new HashMap<>();
-
-
-    public Livro(String titulo, Autor autor){
-        this.id = UUID.randomUUID();
-        this.titulo = titulo;
-        this.autor = autor;
-        this.disponivel = true;
-        this.dataCadastro = LocalDate.now();
-    }
+    private List<Emprestimo> emprestimosLivro;
+    //private int quantidade;
 
     public Livro(String titulo, Autor autor, GeneroLiterario generoLiterario){
         this.id = UUID.randomUUID();
@@ -55,13 +43,10 @@ public class Livro {
         if(emprestimosLivro.isEmpty()){
             return "Nenhuma atividade registrada";
         }
-        else{
-            StringBuilder resultado = new StringBuilder();
-            for (Map.Entry<Cliente, LocalDate> entry : emprestimosLivro.entrySet()) {
-                resultado.append(entry.getKey().getNomeUsuario()).append(" - ").append(entry.getValue()).append("\n");
-            }
-            return resultado.toString();
-        }
+        return emprestimosLivro.stream()
+                .sorted(Comparator.comparing(Emprestimo::getDataEmprestimo))
+                .map(e -> "Cliente: " + e.getCliente().getNome() + ", Data: " + e.getDataEmprestimo())
+                .collect(Collectors.joining("\n"));
     }
 
 }
