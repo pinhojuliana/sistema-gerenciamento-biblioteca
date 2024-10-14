@@ -2,6 +2,8 @@ package com.sistema.biblioteca.cliente;
 
 import com.sistema.biblioteca.classes_pai.Pessoa;
 import com.sistema.biblioteca.emprestimo.Emprestimo;
+import com.sistema.biblioteca.validacao_email.EmailInvalidoException;
+import com.sistema.biblioteca.validacao_email.ValidacaoEmail;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,11 +17,10 @@ public class Cliente extends Pessoa {
     private String email;
     private List<Emprestimo> emprestimos;
 
-    public Cliente(String nome, String nomeUsuario, LocalDate dataNascimento, String email) {
+    public Cliente(String nome, String nomeUsuario, LocalDate dataNascimento, String email) throws EmailInvalidoException{
         super(nome, dataNascimento);
         this.nomeUsuario = nomeUsuario;
-        //criar validação de email
-        this.email = email;
+        this.email = ValidacaoEmail.validarEmail(email);
         this.emprestimos = new ArrayList<>();
     }
 

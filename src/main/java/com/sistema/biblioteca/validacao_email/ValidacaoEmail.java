@@ -6,13 +6,13 @@ import java.util.regex.Pattern;
 public class ValidacaoEmail {
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 
-    public static String validarEmail(String email) throws InvalidEmailException {
+    public static String validarEmail(String email) throws EmailInvalidoException {
         Pattern pattern = Pattern.compile(EMAIL_REGEX);
         Matcher matcher = pattern.matcher(email);
         if(matcher.matches()) {
             return email;
         } else {
-            throw new InvalidEmailException("O e-mail" + email + " é inválido");
+            throw new EmailInvalidoException("O e-mail" + email + " é inválido");
         }
     }
 

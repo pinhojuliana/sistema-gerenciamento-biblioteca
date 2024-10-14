@@ -1,6 +1,7 @@
 package com.sistema.biblioteca.emprestimo;
 
 import com.sistema.biblioteca.cliente.Cliente;
+import com.sistema.biblioteca.formatador_data.FormatadorData;
 import com.sistema.biblioteca.livro.Livro;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,7 +25,7 @@ public class Emprestimo {
 
     public String toString(){
         return String.format("Livro: %s \nCliente que realizou o empréstimo: %s \nData do empréstimo: %s",
-                livro.getTitulo(), cliente.getNome(), new FormatadorData(dataEmprestimo).formatarData());
+                livro.getTitulo(), cliente.getNome(), FormatadorData.formatarData(dataEmprestimo));
     }
 
 }
