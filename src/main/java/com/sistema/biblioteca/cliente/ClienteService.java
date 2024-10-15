@@ -1,6 +1,7 @@
 package com.sistema.biblioteca.cliente;
 
 import com.sistema.biblioteca.emprestimo.Emprestimo;
+import com.sistema.biblioteca.validacao_email.EmailInvalidoException;
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -18,7 +19,7 @@ public class ClienteService {
         this.clientes = new ArrayList<>();
     }
 
-    public void cadastrarCliente(String nome, String nomeUsuario, LocalDate dataNascimento, String email){
+    public void cadastrarCliente(String nome, String nomeUsuario, LocalDate dataNascimento, String email) throws EmailInvalidoException {
         Cliente cliente = new Cliente(nome, nomeUsuario, dataNascimento, email);
         clientes.add(cliente);
         //verificar se o cliente existe com anyMatch do stram API

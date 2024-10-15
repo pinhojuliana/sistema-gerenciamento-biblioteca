@@ -11,14 +11,15 @@ import com.sistema.biblioteca.livro.LivroIndisponivelException;
 import com.sistema.biblioteca.livro.GeneroLiterario;
 import com.sistema.biblioteca.livro.Livro;
 import com.sistema.biblioteca.livro.LivroService;
+import com.sistema.biblioteca.validacao_email.EmailInvalidoException;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import java.util.Scanner;
 
-/* Modificar opções para ter uma opção de pegar livro ou não dentro da opção 1
-* Verificar se os métodos estao com seus respectivos metodos de validação
+/* Verificar se os métodos estao com seus respectivos metodos de validação
 * Criar testes unitários*/
 
 public class SistemaBiblioteca {
@@ -41,7 +42,7 @@ public class SistemaBiblioteca {
 
         System.out.println("--- Bem-vindo ao sistema de Biblioteca ---");
         while(true){
-            System.out.println("Escolha uma opção para continuar:\n1- Ver os livros disponíveis para empréstimo\n2- Cadastrar usuário\n3- Cadastrar novo livro\n4- Pesquisar livro\n5- Verificar empréstimos de um usuário\n6- Verificar empréstimos de um livro\n7- Sair "));
+            System.out.println("Escolha uma opção para continuar:\n1- Ver os livros disponíveis para empréstimo\n2- Cadastrar usuário\n3- Cadastrar novo livro\n4- Pesquisar livro\n5- Verificar empréstimos de um usuário\n6- Verificar empréstimos de um livro\n7- Sair ");
 
             int opcao = scanner.nextInt();
             if(opcao == 7)
@@ -51,7 +52,14 @@ public class SistemaBiblioteca {
 
             if(opcao == 1) {
                 System.out.println("Livros disponíveis:");
-                biblioteca.mostrarLivrosDisponiveis();
+                livroService.mostrarLivrosDisponiveis();
+
+                System.out.println("Deseja pegar algum livro emprestado?(s/n)");
+                String input = scanner.nextLine();
+
+                if(input.equalsIgnoreCase("n")){
+                    continue;
+                }
 
                 System.out.println("Qual livro deseja pegar emprestado?");
                 String tituloLivroEmprestimo = scanner.nextLine();
@@ -60,16 +68,15 @@ public class SistemaBiblioteca {
                     System.out.println("Qual é o seu nome de usuário?");
                     String usuarioCliente = scanner.nextLine();
                     Cliente cliente = clienteService.verificarCliente(usuarioCliente);
-                                try {
-                                    Livro livro = livroService.pesquisarLivroTitulo(tituloLivroEmprestimo);
-                                    emprestimoService.emprestarLivro(cliente, livro);
-                                    System.out.println("Livro: " + livro.getTitulo() + ", id: " + livro.getId() + " foi emprestado para o cliente: " + usuarioCliente);
-                                } catch (LivroIndisponivelException n) {
-                                    System.out.println(n.getMessage());
-                                }
+                    Livro livro = livroService.pesquisarLivroTitulo(tituloLivroEmprestimo);
 
-                }catch (UsuarioInexistenteException e){
-                    System.out.println(e.getMessage());
+                    emprestimoService.emprestarLivro(cliente, livro);
+                    System.out.println("Livro: " + livro.getTitulo() + ", id: " + livro.getId() + " foi emprestado para o cliente: " + usuarioCliente);
+
+                } catch (LivroIndisponivelException | UsuarioInexistenteException e) {
+                    System.out.println("Erro: " + e.getMessage());
+                } catch (Exception e) {
+                    System.out.println("Ocorreu um erro inesperado: " + e.getMessage());
                 }
             }
 
@@ -106,7 +113,11 @@ public class SistemaBiblioteca {
                         break;
                     }
                 }
-                clienteService.cadastrarCliente(nome, nomeUsuario, dataFormatada, email);
+                try {
+                    clienteService.cadastrarCliente(nome, nomeUsuario, dataFormatada, email);
+                } catch (EmailInvalidoException e) {
+                    System.out.println(e.getMessage());
+                }
                 System.out.println("Cliente cadastrado com sucesso! Guarde seu nome de usuário para futuras consultas e empréstimos de livros.");
             }
 
@@ -128,13 +139,9 @@ public class SistemaBiblioteca {
                     }
                 }
                     try{
-                        livroService.verificarCadastroLivro(titulo, autorService.verificarAutor());
                         Autor autor = autorService.verificarAutor(nomeAutor);
-                            if(autorService.verificarAutor(nomeAutor) == null){
-                                livroService.cadastrarLivro(titulo, new Autor(nomeAutor, dataNascimento), generoSelecionado);
-                            } else {
-                                livroService.cadastrarLivro(titulo, autor, generoSelecionado);
-                            }
+                        livroService.verificarCadastroLivro(titulo, autor);
+                        livroService.cadastrarLivro(titulo, Objects.requireNonNullElseGet(autor, () -> new Autor(nomeAutor)), generoSelecionado);
                         System.out.println("Livro cadastrado com sucesso.");
                     }
                     catch (RuntimeException e) {
@@ -168,7 +175,7 @@ public class SistemaBiblioteca {
                 System.out.println("Qual o nome de usuário do cliente que deseja verificar?");
                 String nomeUsuario = scanner.nextLine();
                 try {
-                    System.out.println(clienteService.verificarCliente(nomeUsuario).mostrarEmprestimosCliente());
+                    System.out.println(emprestimoService.mostrarEmprestimosCliente(clienteService.verificarCliente(nomeUsuario)));
                 }
                 catch (UsuarioInexistenteException e){
                     System.out.println(e.getMessage());
@@ -177,14 +184,13 @@ public class SistemaBiblioteca {
 
             if(opcao == 6){
                 try{
-                    System.out.println("Para pesquisar os empŕestimos de um livro insira seu título: ");
+                    System.out.println("Para pesquisar os empréstimos de um livro insira seu título: ");
                     String tituloLivro = scanner.nextLine();
                     System.out.println(emprestimoService.mostrarEmprestimosLivro(livroService.pesquisarLivroTitulo(tituloLivro)));
                 } catch (LivroIndisponivelException e) {
                     System.out.println(e.getMessage());
                 }
             }
-
 
             if (opcao < 1 || opcao > 7) {
                 System.out.println("Opção inválida. Por favor, insira uma opção válida");
