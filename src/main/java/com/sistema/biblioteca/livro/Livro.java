@@ -2,6 +2,7 @@ package com.sistema.biblioteca.livro;
 
 import com.sistema.biblioteca.autor.Autor;
 import com.sistema.biblioteca.emprestimo.Emprestimo;
+import com.sistema.biblioteca.formatador_data.FormatadorData;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -32,7 +33,7 @@ public class Livro {
     }
 
     public String toString(){
-        return String.format("Livro: %s \nAutor: %s \nGenero Literário: %s \nData cadastro: %s ", titulo, autor.getNome(), generoLiterario.getNomeGeneroLiterario(), new FormatadorData(dataCadastro).formatarData());
+        return String.format("Livro: %s \nAutor: %s \nGenero Literário: %s \nData cadastro: %s ", titulo, autor.getNome(), generoLiterario.getNomeGeneroLiterario(), FormatadorData.formatarData(dataCadastro));
     }
 
 

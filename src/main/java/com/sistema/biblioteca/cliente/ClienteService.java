@@ -1,12 +1,10 @@
 package com.sistema.biblioteca.cliente;
 
-import com.sistema.biblioteca.emprestimo.Emprestimo;
 import com.sistema.biblioteca.validacao_email.EmailInvalidoException;
 import lombok.Getter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
