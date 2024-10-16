@@ -47,6 +47,32 @@ public class MenuBiblioteca {
         System.out.println("7- Sair");
     }
 
+    public void executarAcaoMenu(int opcao){
+        switch (opcao){
+            case 1:
+                mostrarLivrosisponiveis();
+                break;
+            case 2:
+                cadastrarUsuario();
+                break;
+            case 3:
+                cadastrarNovoLivro();
+                break;
+            case 4:
+                pesquisarLivro();
+                break;
+            case 5:
+                mostrarEmprestimosCliente();
+                break;
+            case 6:
+                mostrarEmprestimosLivro();
+                break;
+            default:
+                System.out.println("Opção inválida. Por favor, insira uma opção válida.");
+                break;
+        }
+    }
+
     public void mostrarLivrosisponiveis(){
         System.out.println("Livros disponíveis:");
         livroService.mostrarLivrosDisponiveis();
@@ -55,7 +81,7 @@ public class MenuBiblioteca {
         String input = scanner.nextLine();
 
         if(input.equalsIgnoreCase("n")){
-            continue;
+            return;
         }
 
         System.out.println("Qual livro deseja pegar emprestado?");

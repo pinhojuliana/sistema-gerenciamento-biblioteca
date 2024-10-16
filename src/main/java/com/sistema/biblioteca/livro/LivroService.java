@@ -1,8 +1,6 @@
 package com.sistema.biblioteca.livro;
 
 import com.sistema.biblioteca.autor.Autor;
-import com.sistema.biblioteca.cliente.Cliente;
-import com.sistema.biblioteca.emprestimo.Emprestimo;
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -16,6 +14,15 @@ public class LivroService {
 
     public LivroService(){
         this.livros = new ArrayList<>();
+    }
+
+    public void cadastrarLivrosPadrao(){
+        cadastrarLivro("1984", new Autor("George Orwell"), GeneroLiterario.FICCAO_CIENTIFICA);
+        cadastrarLivro("Assassinato no Expresso do Oriente", new Autor("Agatha Cristhie"), GeneroLiterario.ROMANCE_POLICIAL);
+        cadastrarLivro("O Pequeno Principe", new Autor("Antoine de Saint-Exupéry"), GeneroLiterario.FANTASIA);
+        cadastrarLivro("Verdadeiro Evangelho", new Autor("Paul Washer"), GeneroLiterario.RELIGIOSO);
+        cadastrarLivro("Trabalho Focado", new Autor("Carl Newport"), GeneroLiterario.DESENVOLVIMENTO_PESSOAL);
+        cadastrarLivro("Iracema", new Autor("José de Alencar"), GeneroLiterario.ROMANCE);
     }
 
     public void cadastrarLivro(String titulo, Autor autor, GeneroLiterario generoLiterario){
