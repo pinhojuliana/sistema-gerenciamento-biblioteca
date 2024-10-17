@@ -1,16 +1,22 @@
 package com.sistema.biblioteca.classes_pai;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
-@NoArgsConstructor
+//@NoArgsConstructor
 @Getter
 public class Pessoa {
+    //@Id
+    //@Column
     private UUID id;
+    //@Column
     private String nome;
+    //@Column
     private LocalDate dataNascimento;
 
     public Pessoa(String nome, LocalDate dataNascimento) {
