@@ -4,12 +4,16 @@ import com.sistema.biblioteca.cliente.ClienteService;
 import com.sistema.biblioteca.cliente.UsuarioInexistenteException;
 import com.sistema.biblioteca.validacao_email.EmailInvalidoException;
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
 public class ClienteServiceTest {
-    /* 
+
+    /*private ClienteService clienteService;
+
     @BeforeEach
     void criaObjetoClienteService(){
         ClienteService clienteService = new ClienteService();
