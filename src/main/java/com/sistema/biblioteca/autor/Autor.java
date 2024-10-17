@@ -5,7 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-
+//@Entity
+//@Table(name = "autor")
 @Getter
 @Setter
 public class Autor extends Pessoa {

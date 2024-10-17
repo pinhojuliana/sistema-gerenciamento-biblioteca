@@ -8,13 +8,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
+/*
+* @Entity
+* @Table(name = "emprestimo")*/
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Emprestimo {
+    //@Id
+    //@Column
+    //private UUID id;
     private Livro livro;
+    //@Column
     private Cliente cliente;
+    //@Column
     private LocalDate dataEmprestimo;
 
     public Emprestimo(Livro livro, Cliente cliente){
