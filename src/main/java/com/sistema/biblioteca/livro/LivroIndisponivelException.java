@@ -1,6 +1,6 @@
 package com.sistema.biblioteca.livro;
 
-public class LivroIndisponivelException extends Exception{
+public class LivroIndisponivelException extends RuntimeException{
     public LivroIndisponivelException (){
         super ("Livro indisponível");
     }

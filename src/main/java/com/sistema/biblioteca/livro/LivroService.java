@@ -38,11 +38,11 @@ public class LivroService {
     }
 
 
-    public Livro verificarCadastroLivro(String titulo, Autor autor) {
+    public Livro verificarCadastroLivro(String titulo, Autor autor) throws LivroIndisponivelException {
         return livros.stream()
                 .filter(l -> l.getTitulo().equalsIgnoreCase(titulo) && l.getAutor().equals(autor))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new LivroIndisponivelException());
     }
 
     public Livro pesquisarLivroTitulo(String tituloLivro) throws LivroIndisponivelException{

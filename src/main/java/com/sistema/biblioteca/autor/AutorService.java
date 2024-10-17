@@ -15,8 +15,8 @@ public class AutorService {
         this.autores = new ArrayList<>();
     }
 
-    public void cadastrarAutor(String nome, LocalDate dataNascimento){
-        //verificar se existe, se sim lança exceção
+    public void cadastrarAutor(String nome){
+        autores.add(new Autor(nome));
     }
 
     public Autor verificarAutor(String nomeAutor){

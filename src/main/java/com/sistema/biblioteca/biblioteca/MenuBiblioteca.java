@@ -162,12 +162,13 @@ public class MenuBiblioteca {
             }
         }
         try{
+            //ajustarmetododepois
             Autor autor = autorService.verificarAutor(nomeAutor);
             livroService.verificarCadastroLivro(titulo, autor);
             livroService.cadastrarLivro(titulo, Objects.requireNonNullElseGet(autor, () -> new Autor(nomeAutor)), generoSelecionado);
             System.out.println("Livro cadastrado com sucesso.");
         }
-        catch (RuntimeException e) {
+        catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
