@@ -9,6 +9,12 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 
 public class ClienteServiceTest {
+    /* 
+    @BeforeEach
+    void criaObjetoClienteService(){
+        ClienteService clienteService = new ClienteService();
+    }
+    */
 
     @Test
     void deveCadastrarCliente(){
@@ -19,7 +25,7 @@ public class ClienteServiceTest {
     }
 
     @Test
-    void lancarExcecaoEmail(){
+    void deveLancarExcecaoEmail(){
         ClienteService clienteService = new ClienteService();
 
         assertThrows(EmailInvalidoException.class, () -> {
@@ -37,7 +43,7 @@ public class ClienteServiceTest {
     }
 
     @Test
-    void lancarExcecaoClienteInexistente(){
+    void deveLancarExcecaoClienteInexistente(){
         ClienteService clienteService = new ClienteService();
         clienteService.cadastrarCliente("Maria", "mmaria12", LocalDate.of(2005, 6, 15), "mariap12@gmail.com");
         clienteService.cadastrarCliente("João", "joao.silva", LocalDate.of(1997, 5, 30), "silva2joao@outlook.com");
@@ -48,7 +54,7 @@ public class ClienteServiceTest {
     }
 
     @Test
-    void retornarClientePesquisa(){
+    void deveRetornarClientePesquisa(){
         ClienteService clienteService = new ClienteService();
         clienteService.cadastrarCliente("Maria", "mmaria12", LocalDate.of(2005, 6, 15), "mariap12@gmail.com");
         clienteService.cadastrarCliente("João", "joao.silva", LocalDate.of(1997, 5, 30), "silva2joao@outlook.com");
