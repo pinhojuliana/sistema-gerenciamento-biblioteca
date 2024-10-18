@@ -32,7 +32,12 @@ public class LivroService {
     }
 
     public String mostrarLivrosDisponiveis(){
+        if(livros.isEmpty() || livros.stream().noneMatch(Livro::isDisponivel)){
+            return "Nenhum livro disponível";
+        }
+
         return livros.stream()
+                .filter(Livro::isDisponivel)
                 .map(Livro::getTitulo)
                 .collect(Collectors.joining("\n"));
     }
@@ -42,10 +47,11 @@ public class LivroService {
         return livros.stream()
                 .filter(l -> l.getTitulo().equalsIgnoreCase(titulo) && l.getAutor().equals(autor))
                 .findFirst()
-                .orElseThrow(() -> new LivroIndisponivelException());
+                .orElseThrow(LivroIndisponivelException::new);
     }
 
     public Livro pesquisarLivroTitulo(String tituloLivro) throws LivroIndisponivelException{
+        //ajustar pois posso ter mais de um livro com o mesmo titulo, porem de diferentes autores
         return livros.stream()
                 .filter(l -> l.getTitulo().equalsIgnoreCase(tituloLivro))
                 .findFirst()

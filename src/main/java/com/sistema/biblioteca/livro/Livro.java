@@ -47,7 +47,7 @@ public class Livro {
     }
 
     public String toString(){
-        return String.format("Livro: %s \nAutor: %s \nGenero Literário: %s \nData cadastro: %s ", titulo, autor.getNome(), generoLiterario.getNomeGeneroLiterario(), FormatadorData.formatarData(dataCadastro));
+        return String.format("Livro: %s\nAutor: %s\nGenero Literário: %s\nData cadastro: %s\nDisponível: %s ", titulo, autor.getNome(), generoLiterario.getNomeGeneroLiterario(), FormatadorData.formatarData(dataCadastro), isDisponivel());
     }
 
 

@@ -1,5 +1,8 @@
 package com.sistema.biblioteca.livro;
 
+import lombok.Getter;
+
+@Getter
 public enum GeneroLiterario {
     ROMANCE ("Romance"),
     ROMANCE_POLICIAL("Romance policial"),
