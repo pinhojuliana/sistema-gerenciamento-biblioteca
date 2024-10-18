@@ -5,41 +5,34 @@ import com.sistema.biblioteca.cliente.UsuarioInexistenteException;
 import com.sistema.biblioteca.validacao_email.EmailInvalidoException;
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 
+@ExtendWith(MockitoExtension.class)
 public class ClienteServiceTest {
 
-    /*private ClienteService clienteService;
-
-    @BeforeEach
-    void criaObjetoClienteService(){
-        ClienteService clienteService = new ClienteService();
-    }
-    */
+    @InjectMocks
+  private ClienteService clienteService;
 
     @Test
     void deveCadastrarCliente(){
-        ClienteService clienteService = new ClienteService();
         clienteService.cadastrarCliente("Maria", "mmaria12", LocalDate.of(2005, 6, 15), "mariap12@gmail.com");
-
         assertEquals("Maria", clienteService.getClientes().get(0).getNome());
     }
 
     @Test
     void deveLancarExcecaoEmail(){
-        ClienteService clienteService = new ClienteService();
-
-        assertThrows(EmailInvalidoException.class, () -> {
+       assertThrows(EmailInvalidoException.class, () -> {
             clienteService.cadastrarCliente("Maria", "mmaria12", LocalDate.of(2005, 6, 15), "email_invalido");
         });
     }
 
     @Test
     void deveMostrarListaClientesCadastrados(){
-        ClienteService clienteService = new ClienteService();
         clienteService.cadastrarCliente("Maria", "mmaria12", LocalDate.of(2005, 6, 15), "mariap12@gmail.com");
         clienteService.cadastrarCliente("João", "joao.silva", LocalDate.of(1997, 5, 30), "silva2joao@outlook.com");
 
@@ -48,7 +41,6 @@ public class ClienteServiceTest {
 
     @Test
     void deveLancarExcecaoClienteInexistente(){
-        ClienteService clienteService = new ClienteService();
         clienteService.cadastrarCliente("Maria", "mmaria12", LocalDate.of(2005, 6, 15), "mariap12@gmail.com");
         clienteService.cadastrarCliente("João", "joao.silva", LocalDate.of(1997, 5, 30), "silva2joao@outlook.com");
 
@@ -58,9 +50,8 @@ public class ClienteServiceTest {
     }
 
     @Test
-    void deveRetornarClientePesquisa(){
-        ClienteService clienteService = new ClienteService();
-        clienteService.cadastrarCliente("Maria", "mmaria12", LocalDate.of(2005, 6, 15), "mariap12@gmail.com");
+    void pesquisaDeveRetornarCliente(){
+       clienteService.cadastrarCliente("Maria", "mmaria12", LocalDate.of(2005, 6, 15), "mariap12@gmail.com");
         clienteService.cadastrarCliente("João", "joao.silva", LocalDate.of(1997, 5, 30), "silva2joao@outlook.com");
 
         assertEquals(clienteService.getClientes().get(0), clienteService.verificarCliente("mmaria12"));

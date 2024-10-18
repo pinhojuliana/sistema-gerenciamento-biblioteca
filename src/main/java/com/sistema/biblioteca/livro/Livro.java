@@ -43,6 +43,7 @@ public class Livro {
         this.generoLiterario = generoLiterario;
         this.disponivel = true;
         this.dataCadastro = LocalDate.now();
+        this.emprestimosLivro = new ArrayList<>();
     }
 
     public String toString(){

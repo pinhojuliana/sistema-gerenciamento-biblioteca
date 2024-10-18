@@ -48,7 +48,7 @@ public class EmprestimoService {
         }
         return livro.getEmprestimosLivro().stream()
                 .sorted(Comparator.comparing(Emprestimo::getDataEmprestimo))
-                .map(e -> "Cliente: " + e.getCliente().getNome() + ", Data: " + e.getDataEmprestimo())
+                .map(e -> "Cliente: " + e.getCliente().getNomeUsuario() + ", Data: " + e.getDataEmprestimo())
                 .collect(Collectors.joining("\n"));
     }
 }
