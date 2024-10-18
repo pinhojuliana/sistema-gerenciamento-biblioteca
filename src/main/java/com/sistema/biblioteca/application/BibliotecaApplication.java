@@ -1,11 +1,9 @@
 package com.sistema.biblioteca.application;
 
 
-public class SistemaBiblioteca {
-    public static void main(String[] args) {
-    }
-}
-/*
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 @SpringBootApplication
 public class BibliotecaApplication {
 
@@ -14,4 +12,3 @@ public class BibliotecaApplication {
 	}
 
 }
-* */

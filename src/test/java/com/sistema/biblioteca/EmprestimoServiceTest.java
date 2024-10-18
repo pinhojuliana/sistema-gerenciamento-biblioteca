@@ -2,47 +2,39 @@ package com.sistema.biblioteca;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.sistema.biblioteca.autor.AutorService;
+import com.sistema.biblioteca.autor.Autor;
 import com.sistema.biblioteca.cliente.Cliente;
-import com.sistema.biblioteca.cliente.ClienteService;
+import com.sistema.biblioteca.emprestimo.Emprestimo;
 import com.sistema.biblioteca.emprestimo.EmprestimoService;
+import com.sistema.biblioteca.livro.GeneroLiterario;
 import com.sistema.biblioteca.livro.Livro;
 import com.sistema.biblioteca.livro.LivroIndisponivelException;
-import com.sistema.biblioteca.livro.LivroService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 
+@ExtendWith(MockitoExtension.class)
 public class EmprestimoServiceTest {
+
     @InjectMocks
     private EmprestimoService emprestimoService;
 
-    @Mock
-    private LivroService livroService;
-
-    @Mock
-    private ClienteService clienteService;
-
-    @Mock
-    private AutorService autorService;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this); // Inicializa os mocks
-    }
-
     @Test
     void deveEmprestarLivro(){
-
+        Cliente cliente = new Cliente("Maria", "mmaria12", LocalDate.of(2005, 6, 15), "mariap12@gmail.com");
+        Livro livro = new Livro("Iracema", new Autor("José de Alencar"), GeneroLiterario.ROMANCE);
+        Emprestimo emprestimo = new Emprestimo(livro, cliente);
+        emprestimoService.emprestarLivro(cliente, livro);
+        assertEquals("Iracema", cliente.getEmprestimos().get(0).getLivro().getTitulo());
+        assertEquals("mmaria12", livro.getEmprestimosLivro().get(0).getCliente().getNomeUsuario());
+        assertEquals(LocalDate.now(), emprestimo.getDataEmprestimo());
     }
 
     @Test
     void deveLancarExcecaoLivroIndisponivel(){
-        EmprestimoService emprestimoService = new EmprestimoService();
         assertThrows(LivroIndisponivelException.class, () -> {
             emprestimoService.emprestarLivro(new Cliente("Maria", "mmaria12", LocalDate.of(2005, 6, 15), "mariap12@gmail.com"), new Livro());
         });
@@ -50,22 +42,42 @@ public class EmprestimoServiceTest {
 
     @Test
     void deveMostrarEmprestimosCliente(){
-
+        Cliente cliente = new Cliente("Maria", "mmaria12", LocalDate.of(2005, 6, 15), "mariap12@gmail.com");
+        Livro livro = new Livro("Iracema", new Autor("José de Alencar"), GeneroLiterario.ROMANCE);
+        Emprestimo emprestimo = new Emprestimo(livro, cliente);
+        Livro livro1 = new Livro("O Pequeno Principe", new Autor("Antoine de Saint-Exupéry"), GeneroLiterario.FANTASIA);
+        emprestimoService.emprestarLivro(cliente, livro);
+        emprestimoService.emprestarLivro(cliente, livro1);
+        assertEquals("Livro: Iracema, Data: " + LocalDate.now() + "\nLivro: O Pequeno Principe, Data: " + LocalDate.now(), emprestimoService.mostrarEmprestimosCliente(cliente));
     }
 
     @Test
     void deveLancarMensagemListaClienteVazia(){
-        EmprestimoService emprestimoService = new EmprestimoService();
         assertEquals("Nenhuma atividade registrada", emprestimoService.mostrarEmprestimosCliente(new Cliente("Maria", "mmaria12", LocalDate.of(2005, 6, 15), "maria@gmail.com")));
     }
 
     @Test
     void deveMostrarEmprestimosLivro(){
+        Livro livro = new Livro("Iracema", new Autor("José de Alencar"), GeneroLiterario.ROMANCE);
+        Cliente cliente = new Cliente("Maria", "mmaria12", LocalDate.of(2005, 6, 15), "mariap12@gmail.com");
+        emprestimoService.emprestarLivro(cliente, livro);
+        assertEquals("Cliente: mmaria12, Data: " + LocalDate.now(), emprestimoService.mostrarEmprestimosLivro(livro));
+    }
 
+    @Test
+    void deveLancarExcecaoLivroIndisponivelEmprestimo(){
+        Livro livro = new Livro("Iracema", new Autor("José de Alencar"), GeneroLiterario.ROMANCE);
+        Cliente cliente = new Cliente("Maria", "mmaria12", LocalDate.of(2005, 6, 15), "mariap12@gmail.com");
+        Cliente cliente1 = new Cliente("João", "joao.silva", LocalDate.of(1997, 5, 30), "silva2joao@outlook.com");
+        emprestimoService.emprestarLivro(cliente, livro);
+        assertThrows(LivroIndisponivelException.class, () -> {
+            emprestimoService.emprestarLivro(cliente1, livro);
+        });
     }
 
     @Test
     void deveLancarMensagemListaLivroVazia(){
-
+        Livro livro = new Livro("Iracema", new Autor("José de Alencar"), GeneroLiterario.ROMANCE);
+        assertEquals("Nenhuma atividade registrada", emprestimoService.mostrarEmprestimosLivro(livro));
     }
 }
