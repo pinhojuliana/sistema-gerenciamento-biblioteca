@@ -1,12 +1,11 @@
-package com.sistema.biblioteca.autor;
+package com.sistema.biblioteca.entity.pessoa.autor;
 
-import com.sistema.biblioteca.classes_pai.Pessoa;
+import com.sistema.biblioteca.entity.pessoa.Pessoa;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-//@Entity
-//@Table(name = "autor")
+
 @Getter
 @Setter
 public class Autor extends Pessoa {

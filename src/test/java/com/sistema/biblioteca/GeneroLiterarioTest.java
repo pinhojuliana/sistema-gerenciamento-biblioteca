@@ -1,6 +1,6 @@
 package com.sistema.biblioteca;
 
-import com.sistema.biblioteca.livro.GeneroLiterario;
+import com.sistema.biblioteca.entity.livro.GeneroLiterario;
 import org.junit.jupiter.api.Test;
 
 import java.util.Objects;

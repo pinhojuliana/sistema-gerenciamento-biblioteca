@@ -1,16 +1,16 @@
-package com.sistema.biblioteca.biblioteca;
+package com.sistema.biblioteca.entity.biblioteca;
 
-import com.sistema.biblioteca.autor.Autor;
-import com.sistema.biblioteca.autor.AutorService;
-import com.sistema.biblioteca.cliente.Cliente;
-import com.sistema.biblioteca.cliente.ClienteService;
-import com.sistema.biblioteca.cliente.UsuarioInexistenteException;
-import com.sistema.biblioteca.emprestimo.EmprestimoService;
-import com.sistema.biblioteca.livro.GeneroLiterario;
-import com.sistema.biblioteca.livro.Livro;
-import com.sistema.biblioteca.livro.LivroIndisponivelException;
-import com.sistema.biblioteca.livro.LivroService;
-import com.sistema.biblioteca.validacao_email.EmailInvalidoException;
+import com.sistema.biblioteca.entity.pessoa.autor.Autor;
+import com.sistema.biblioteca.entity.pessoa.autor.AutorService;
+import com.sistema.biblioteca.entity.pessoa.cliente.Cliente;
+import com.sistema.biblioteca.entity.pessoa.cliente.ClienteService;
+import com.sistema.biblioteca.entity.pessoa.cliente.UsuarioInexistenteException;
+import com.sistema.biblioteca.entity.emprestimo.EmprestimoService;
+import com.sistema.biblioteca.entity.livro.GeneroLiterario;
+import com.sistema.biblioteca.entity.livro.Livro;
+import com.sistema.biblioteca.entity.livro.LivroIndisponivelException;
+import com.sistema.biblioteca.entity.livro.LivroService;
+import com.sistema.biblioteca.util.validacao_email.EmailInvalidoException;
 import lombok.Getter;
 
 import java.time.DateTimeException;
@@ -73,6 +73,8 @@ public class MenuBiblioteca {
         }
     }
 
+
+    //Não seria melhor criar um metodo so para mostrar os livros e depois eu invovo um para emprestimo?
     public void mostrarLivrosisponiveis(){
         System.out.println("Livros disponíveis:");
         livroService.mostrarLivrosDisponiveis();

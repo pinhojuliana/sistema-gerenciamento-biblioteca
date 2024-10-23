@@ -1,4 +1,4 @@
-package com.sistema.biblioteca.cliente;
+package com.sistema.biblioteca.entity.pessoa.cliente;
 
 public class UsuarioInexistenteException extends RuntimeException{
     public UsuarioInexistenteException(){

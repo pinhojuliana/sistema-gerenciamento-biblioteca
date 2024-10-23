@@ -1,6 +1,6 @@
-package com.sistema.biblioteca.livro;
+package com.sistema.biblioteca.entity.livro;
 
-import com.sistema.biblioteca.autor.Autor;
+import com.sistema.biblioteca.entity.pessoa.autor.Autor;
 import lombok.Getter;
 
 import java.time.LocalDate;

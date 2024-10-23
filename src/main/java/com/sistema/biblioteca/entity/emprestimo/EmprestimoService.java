@@ -1,8 +1,8 @@
-package com.sistema.biblioteca.emprestimo;
+package com.sistema.biblioteca.entity.emprestimo;
 
-import com.sistema.biblioteca.cliente.Cliente;
-import com.sistema.biblioteca.livro.Livro;
-import com.sistema.biblioteca.livro.LivroIndisponivelException;
+import com.sistema.biblioteca.entity.pessoa.cliente.Cliente;
+import com.sistema.biblioteca.entity.livro.Livro;
+import com.sistema.biblioteca.entity.livro.LivroIndisponivelException;
 
 import java.time.LocalDate;
 import java.util.*;

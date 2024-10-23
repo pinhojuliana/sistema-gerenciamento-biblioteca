@@ -1,29 +1,20 @@
-package com.sistema.biblioteca.emprestimo;
+package com.sistema.biblioteca.entity.emprestimo;
 
-import com.sistema.biblioteca.cliente.Cliente;
-import com.sistema.biblioteca.formatador_data.FormatadorData;
-import com.sistema.biblioteca.livro.Livro;
+import com.sistema.biblioteca.entity.pessoa.cliente.Cliente;
+import com.sistema.biblioteca.util.formatador_data.FormatadorData;
+import com.sistema.biblioteca.entity.livro.Livro;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
-/*
-* @Entity
-* @Table(name = "emprestimo")*/
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Emprestimo {
-    //@Id
-    //@Column
-    //private UUID id;
     private Livro livro;
-    //@Column
     private Cliente cliente;
-    //@Column
     private LocalDate dataEmprestimo;
 
     public Emprestimo(Livro livro, Cliente cliente){

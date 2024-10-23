@@ -2,8 +2,8 @@ package com.sistema.biblioteca;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.sistema.biblioteca.validacao_email.EmailInvalidoException;
-import com.sistema.biblioteca.validacao_email.ValidacaoEmail;
+import com.sistema.biblioteca.util.validacao_email.EmailInvalidoException;
+import com.sistema.biblioteca.util.validacao_email.ValidacaoEmail;
 import org.junit.jupiter.api.Test;
 
 public class ValidacaoEmailTest {

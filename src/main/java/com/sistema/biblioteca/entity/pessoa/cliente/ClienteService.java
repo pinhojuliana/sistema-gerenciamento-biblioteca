@@ -1,6 +1,6 @@
-package com.sistema.biblioteca.cliente;
+package com.sistema.biblioteca.entity.pessoa.cliente;
 
-import com.sistema.biblioteca.validacao_email.EmailInvalidoException;
+import com.sistema.biblioteca.util.validacao_email.EmailInvalidoException;
 import lombok.Getter;
 
 import java.time.LocalDate;

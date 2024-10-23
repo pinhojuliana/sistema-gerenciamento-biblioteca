@@ -1,6 +1,4 @@
-package com.sistema.biblioteca.validacao_email;
-
-import org.springframework.stereotype.Component;
+package com.sistema.biblioteca.util.validacao_email;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

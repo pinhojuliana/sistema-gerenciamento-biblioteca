@@ -1,28 +1,20 @@
-package com.sistema.biblioteca.cliente;
+package com.sistema.biblioteca.entity.pessoa.cliente;
 
-import com.sistema.biblioteca.classes_pai.Pessoa;
-import com.sistema.biblioteca.emprestimo.Emprestimo;
-import com.sistema.biblioteca.validacao_email.EmailInvalidoException;
-import com.sistema.biblioteca.validacao_email.ValidacaoEmail;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.sistema.biblioteca.entity.pessoa.Pessoa;
+import com.sistema.biblioteca.entity.emprestimo.Emprestimo;
+import com.sistema.biblioteca.util.validacao_email.EmailInvalidoException;
+import com.sistema.biblioteca.util.validacao_email.ValidacaoEmail;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.*;
 
-//@Entity
-//@Table(name = "cliente")
 @Getter
 @Setter
 public class Cliente extends Pessoa {
-    //@Column
     private String nomeUsuario;
-    //@Column
     private String email;
-    //@Column
     private List<Emprestimo> emprestimos;
 
     public Cliente(String nome, String nomeUsuario, LocalDate dataNascimento, String email) throws EmailInvalidoException{

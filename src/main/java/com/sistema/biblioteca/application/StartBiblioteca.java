@@ -1,12 +1,11 @@
 package com.sistema.biblioteca.application;
 
-import com.sistema.biblioteca.autor.AutorService;
-import com.sistema.biblioteca.biblioteca.MenuBiblioteca;
-import com.sistema.biblioteca.cliente.ClienteService;
-import com.sistema.biblioteca.emprestimo.EmprestimoService;
-import com.sistema.biblioteca.livro.LivroService;
+import com.sistema.biblioteca.entity.pessoa.autor.AutorService;
+import com.sistema.biblioteca.entity.biblioteca.MenuBiblioteca;
+import com.sistema.biblioteca.entity.pessoa.cliente.ClienteService;
+import com.sistema.biblioteca.entity.emprestimo.EmprestimoService;
+import com.sistema.biblioteca.entity.livro.LivroService;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

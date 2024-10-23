@@ -1,9 +1,7 @@
-package com.sistema.biblioteca.autor;
+package com.sistema.biblioteca.entity.pessoa.autor;
 
-import com.sistema.biblioteca.cliente.UsuarioInexistenteException;
 import lombok.Getter;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

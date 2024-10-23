@@ -1,8 +1,8 @@
 package com.sistema.biblioteca;
 
-import com.sistema.biblioteca.cliente.ClienteService;
-import com.sistema.biblioteca.cliente.UsuarioInexistenteException;
-import com.sistema.biblioteca.validacao_email.EmailInvalidoException;
+import com.sistema.biblioteca.entity.pessoa.cliente.ClienteService;
+import com.sistema.biblioteca.entity.pessoa.cliente.UsuarioInexistenteException;
+import com.sistema.biblioteca.util.validacao_email.EmailInvalidoException;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;

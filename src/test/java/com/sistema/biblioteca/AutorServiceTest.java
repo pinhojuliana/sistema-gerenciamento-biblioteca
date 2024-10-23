@@ -2,8 +2,7 @@ package com.sistema.biblioteca;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.sistema.biblioteca.autor.Autor;
-import com.sistema.biblioteca.autor.AutorService;
+import com.sistema.biblioteca.entity.pessoa.autor.AutorService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -2,13 +2,13 @@ package com.sistema.biblioteca;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.sistema.biblioteca.autor.Autor;
-import com.sistema.biblioteca.cliente.Cliente;
-import com.sistema.biblioteca.emprestimo.Emprestimo;
-import com.sistema.biblioteca.emprestimo.EmprestimoService;
-import com.sistema.biblioteca.livro.GeneroLiterario;
-import com.sistema.biblioteca.livro.Livro;
-import com.sistema.biblioteca.livro.LivroIndisponivelException;
+import com.sistema.biblioteca.entity.pessoa.autor.Autor;
+import com.sistema.biblioteca.entity.pessoa.cliente.Cliente;
+import com.sistema.biblioteca.entity.emprestimo.Emprestimo;
+import com.sistema.biblioteca.entity.emprestimo.EmprestimoService;
+import com.sistema.biblioteca.entity.livro.GeneroLiterario;
+import com.sistema.biblioteca.entity.livro.Livro;
+import com.sistema.biblioteca.entity.livro.LivroIndisponivelException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

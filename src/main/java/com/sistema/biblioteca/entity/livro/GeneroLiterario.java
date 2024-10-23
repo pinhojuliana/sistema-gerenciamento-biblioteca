@@ -1,4 +1,4 @@
-package com.sistema.biblioteca.livro;
+package com.sistema.biblioteca.entity.livro;
 
 import lombok.Getter;
 
