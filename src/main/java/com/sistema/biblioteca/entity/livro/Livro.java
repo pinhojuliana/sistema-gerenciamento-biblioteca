@@ -20,7 +20,6 @@ public class Livro {
     private LocalDate dataAtualizacao;
     private GeneroLiterario generoLiterario;
     private List<Emprestimo> emprestimosLivro;
-    //private int quantidade;
 
     public Livro(String titulo, Autor autor, GeneroLiterario generoLiterario){
         this.id = UUID.randomUUID();
